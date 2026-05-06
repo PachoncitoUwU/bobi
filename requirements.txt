@@ -1,0 +1,61 @@
+# ══════════════════════════════════════════════════════════════
+#  BOBI - Asistente Virtual Inteligente
+#  Dependencias Python
+# ══════════════════════════════════════════════════════════════
+
+# ── CONFIGURACIÓN ──
+pyyaml>=6.0.1                    # Archivos de configuración
+
+# ── IA - PROVEEDORES ──
+google-genai>=0.2.0                  # Gemini (Google) - GRATIS ⭐ (nueva versión)
+anthropic>=0.34.0                    # Claude (Anthropic) - Pago (opcional)
+ollama>=0.3.0                        # Ollama - Local (opcional)
+
+# ── VOZ ──
+faster-whisper>=1.0.0            # Speech-to-Text (Whisper optimizado)
+pyaudio>=0.2.14                  # Captura de audio del micrófono
+pyttsx3>=2.90                    # Text-to-Speech básico (fallback)
+
+# ── WEB DASHBOARD ──
+flask>=3.0.0                     # Servidor web
+flask-cors>=4.0.0                # CORS para API
+flask-socketio>=5.3.0            # WebSockets para tiempo real
+python-socketio>=5.11.0          # Cliente WebSocket
+
+# ── BASE DE DATOS ──
+sqlalchemy>=2.0.0                # ORM para recordatorios
+
+# ── UTILIDADES ──
+requests>=2.31.0                 # HTTP requests
+python-dateutil>=2.8.2           # Manejo de fechas
+schedule>=1.2.0                  # Tareas programadas
+
+# ── TERMINAL BONITA ──
+rich>=13.0.0                     # Output colorido y bonito
+colorama>=0.4.6                  # Colores en Windows
+
+# ── BÚSQUEDAS WEB ──
+duckduckgo-search>=6.0.0         # Búsquedas sin API key
+
+# ══════════════════════════════════════════════════════════════
+#  INSTALACIÓN ADICIONAL (FUERA DE PIP)
+# ══════════════════════════════════════════════════════════════
+#
+# 1. OLLAMA (opcional - para modo offline):
+#    Windows: https://ollama.ai/download
+#    Linux:   curl -fsSL https://ollama.ai/install.sh | sh
+#    Luego:   ollama pull llama3.2
+#
+# 2. PIPER TTS (opcional - mejor calidad de voz):
+#    pip install piper-tts
+#    Descargar voz: https://github.com/rhasspy/piper/releases
+#
+# 3. PYAUDIO en Windows:
+#    pip install pipwin
+#    pipwin install pyaudio
+#
+# 4. GEMINI API KEY (GRATIS):
+#    https://makersuite.google.com/app/apikey
+#    Luego: export GEMINI_API_KEY="tu-key-aqui"
+#
+# ══════════════════════════════════════════════════════════════

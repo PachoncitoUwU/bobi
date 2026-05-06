@@ -1,0 +1,73 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+env/
+ENV/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Bobi - Datos personales
+data/memory.json
+data/config.yaml
+data/*.db
+data/*.sqlite
+
+# Bobi - Archivos temporales
+*.wav
+*.mp3
+*.log
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# API Keys (por seguridad)
+.env
+*.key
+
+# Archivos de instalación que no deben subirse
+*.whl
+*.tar.xz
+*.tar.gz
+*.zip
+
+# Código fuente de Python (no necesario)
+Python-*/
+python-*/
+
+# Versión antigua (respaldo local)
+old_version/
+
+# Archivos de Whisper cache
+.cache/
+*.cache
+
+# Archivos de Hugging Face
+.huggingface/
