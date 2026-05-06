@@ -1,200 +1,203 @@
 # 🤖 BOBI - Asistente Virtual Inteligente
 
-> 🆓 100% Gratuito · 🎙️ Control por Voz · 🧠 IA Local · 🏠 Casa Inteligente
+> 🆓 100% Gratuito · 🎙️ Control por Voz · 🧠 IA Local · 🎨 Interfaz Gráfica
 
-**Bobi** es tu asistente virtual personal con IA, control por voz y capacidad de automatizar tu casa. Funciona completamente local con Ollama, sin suscripciones ni límites.
+**Bobi** es tu asistente virtual personal con IA, control por voz natural y interfaz gráfica animada. Funciona completamente local con Ollama, sin suscripciones ni límites.
 
 ---
 
 ## ✨ Características
 
 - 🤖 **IA Local con Ollama** - Sin API keys, sin límites, 100% privado
-- 🎙️ **Control por Voz** - Whisper para reconocimiento, pyttsx3 para síntesis
+- 🎙️ **Voz Natural** - Edge-TTS de Microsoft (muy realista)
+- 🎨 **Interfaz Gráfica** - Avatar animado que responde visualmente
 - 🧠 **Memoria Inteligente** - Recuerda conversaciones y preferencias
 - 🔌 **Extensible** - Sistema de plugins modular
-- 🌐 **Multiplataforma** - Windows y Linux
 
 ---
 
-## 🚀 Instalación Rápida
+## 🚀 Inicio Rápido
 
-### Requisitos
-- Python 3.11+ (recomendado 3.12)
-- 16 GB RAM (mínimo 8 GB)
-- 5 GB espacio libre
-
-### Windows
-
-#### 1. Instalar Ollama
+### 1. Instalar Ollama
 ```powershell
 # Descargar desde: https://ollama.com/download
 # Instalar y luego:
 ollama pull llama3.2
 ```
 
-#### 2. Instalar dependencias
+### 2. Instalar dependencias
 ```powershell
 pip install -r requirements.txt
 ```
 
-#### 3. Iniciar Bobi
+### 3. Iniciar Bobi
+
+**Interfaz Gráfica (Recomendado):**
 ```powershell
-python bobi.py
+python bobi_gui.py
 ```
 
-### Linux
-
-```bash
-# Instalar Ollama
-curl -fsSL https://ollama.ai/install.sh | sh
-ollama pull llama3.2
-
-# Instalar dependencias
-pip install -r requirements.txt
-
-# Iniciar Bobi
+**Modo Terminal:**
+```powershell
 python bobi.py
 ```
 
 ---
 
-## 📖 Documentación
+## 🎨 Interfaz Gráfica
 
-- **[EMPIEZA_AQUI.md](EMPIEZA_AQUI.md)** - Guía de inicio rápido
-- **[INSTALACION_WINDOWS.md](INSTALACION_WINDOWS.md)** - Instalación detallada para Windows
-- **[PLAN_DESARROLLO.md](PLAN_DESARROLLO.md)** - Hoja de ruta completa (12 fases)
-- **[ARQUITECTURA.md](ARQUITECTURA.md)** - Documentación técnica
+La nueva interfaz incluye:
+- ✅ **Avatar animado** que cambia según el estado
+- ✅ **Chat visual** con colores diferenciados
+- ✅ **Entrada de texto** y botón de voz
+- ✅ **Animaciones:**
+  - 🎤 Pulso azul cuando escucha
+  - 🤔 Parpadeo cuando piensa
+  - 🗣️ Boca moviéndose cuando habla
+
+---
+
+## 🗂️ Estructura del Proyecto
+
+```
+bobi/
+├── bobi.py                 # ⭐ Modo terminal
+├── bobi_gui.py             # ⭐ Interfaz gráfica (NUEVO)
+├── requirements.txt        # ⭐ Dependencias
+├── README.md               # ⭐ Esta guía
+│
+├── core/                   # Motor principal
+│   ├── brain.py           # Sistema de IA
+│   ├── voice.py           # Voz (STT + TTS mejorado)
+│   ├── memory.py          # Memoria persistente
+│   └── config.py          # Configuración
+│
+├── data/                   # Datos persistentes
+│   ├── memory.json        # Tu memoria con Bobi
+│   └── config.yaml        # Tu configuración
+│
+├── plugins/                # Extensiones (futuro)
+│
+├── docs/                   # 📚 Documentación completa
+│   ├── EMPIEZA_AQUI.md
+│   ├── INSTALACION_WINDOWS.md
+│   ├── PLAN_DESARROLLO.md
+│   └── Más guías...
+│
+└── utils/                  # 🔧 Utilidades
+    ├── test_instalacion.py
+    └── Otros scripts...
+```
+
+---
+
+## 🎙️ Voz Natural
+
+Bobi ahora usa **edge-tts** (Microsoft) para una voz mucho más natural:
+
+**Voces disponibles:**
+- `es-MX-DaliaNeural` - Mujer, México (por defecto) ⭐
+- `es-MX-JorgeNeural` - Hombre, México
+- `es-ES-ElviraNeural` - Mujer, España
+- `es-ES-AlvaroNeural` - Hombre, España
+- `es-AR-ElenaNeural` - Mujer, Argentina
+
+Para cambiar la voz, edita `core/voice.py` línea ~180.
 
 ---
 
 ## 🎮 Uso
 
-### Modo Texto
-```
-[Tú] → Hola Bobi
-[Bobi]: ¡Hola! ¿En qué te puedo ayudar?
+### Interfaz Gráfica
+1. Ejecuta: `python bobi_gui.py`
+2. Escribe en el campo de texto o click en "🎤 Hablar"
+3. Bobi responderá con voz y animación
 
-[Tú] → ¿Qué es Python?
-[Bobi]: Python es un lenguaje de programación...
-```
-
-### Modo Voz (requiere PyAudio)
-1. Presiona Enter
-2. Habla cuando veas "🔴 Grabando..."
-3. Espera la respuesta de Bobi
+### Modo Terminal
+1. Ejecuta: `python bobi.py`
+2. Escribe o presiona Enter para hablar
+3. Bobi responderá por voz
 
 ### Comandos Especiales
 - `estado` - Ver estado del sistema
 - `ayuda` - Ver comandos disponibles
-- `modo texto` / `modo voz` - Cambiar modo de entrada
+- `modo texto` / `modo voz` - Cambiar modo
 - `salir` - Cerrar Bobi
-
----
-
-## 📁 Estructura del Proyecto
-
-```
-bobi/
-├── core/                   # Motor principal
-│   ├── brain.py           # Sistema de IA
-│   ├── voice.py           # Reconocimiento y síntesis de voz
-│   ├── memory.py          # Memoria persistente
-│   └── config.py          # Configuración
-│
-├── plugins/                # Extensiones (futuro)
-│
-├── data/                   # Datos persistentes
-│   ├── memory.json        # Memoria de Bobi
-│   └── config.yaml        # Configuración
-│
-├── bobi.py                 # Punto de entrada
-├── requirements.txt        # Dependencias
-└── README.md              # Esta guía
-```
 
 ---
 
 ## ⚙️ Configuración
 
-Edita `data/config.yaml` para personalizar:
+Edita `data/config.yaml`:
 
 ```yaml
-# Identidad
 nombre: "Bobi"
 idioma: "es"
 
-# IA
 ai_providers:
   ollama:
-    enabled: true
-    model: "llama3.2"  # o phi3, mistral, qwen2.5
+    model: "llama3.2"  # o phi3 (más rápido)
 
-# Voz
 voice:
-  stt_model: "base"  # tiny, base, small, medium
-  tts_engine: "pyttsx3"
-
-# Memoria
-memory:
-  max_history: 20
-  max_facts: 50
+  stt_model: "base"
+  tts_engine: "edge-tts"  # Voz natural
 ```
 
 ---
 
-## 🗺️ Hoja de Ruta
+## 🐛 Solución de Problemas
 
-### ✅ v1.0 (Actual)
-- [x] IA local con Ollama
-- [x] Reconocimiento de voz (Whisper)
-- [x] Síntesis de voz (pyttsx3)
-- [x] Memoria persistente
-- [x] Arquitectura modular
+**Voz no funciona:**
+```powershell
+pip install edge-tts
+```
 
-### 🔜 v1.1 (Próximamente)
-- [ ] Sistema de plugins completo
-- [ ] Recordatorios y alarmas
-- [ ] Búsquedas web inteligentes
-- [ ] Dashboard web
-- [ ] Wake word ("Oye Bobi")
+**Interfaz no abre:**
+```powershell
+# tkinter viene con Python, pero si falla:
+pip install tk
+```
 
-### 🔮 v2.0 (Futuro)
-- [ ] Control de dispositivos IoT
-- [ ] Espejo inteligente
-- [ ] App móvil
-- [ ] Sistema multiroom
+**Respuestas lentas (>20 seg):**
+```powershell
+# Usa modelo más rápido
+ollama pull phi3
+# Edita data/config.yaml: model: "phi3"
+```
+
+**PyAudio no instala:**
+- Requiere Python 3.11 o 3.12 (no 3.14)
+- O usa solo modo texto (funciona igual)
 
 ---
 
-## 💻 Requisitos del Sistema
+## 📚 Documentación
+
+- **[docs/EMPIEZA_AQUI.md](docs/EMPIEZA_AQUI.md)** - Guía de inicio
+- **[docs/INSTALACION_WINDOWS.md](docs/INSTALACION_WINDOWS.md)** - Instalación detallada
+- **[docs/PLAN_DESARROLLO.md](docs/PLAN_DESARROLLO.md)** - Hoja de ruta completa
+
+---
+
+## 🗺️ Próximas Funcionalidades
+
+- [ ] Recordatorios y alarmas
+- [ ] Búsquedas web inteligentes
+- [ ] Control de dispositivos IoT
+- [ ] Dashboard web
+- [ ] Wake word ("Oye Bobi")
+- [ ] App móvil
+
+---
+
+## 💻 Requisitos
 
 | Componente | Mínimo | Recomendado |
 |---|---|---|
 | RAM | 8 GB | 16 GB |
 | CPU | Intel i5 / Ryzen 5 | Intel i7 / Ryzen 7 |
 | Almacenamiento | 5 GB | 10 GB |
-| SO | Windows 10+ / Linux | Linux |
-
----
-
-## 🐛 Solución de Problemas
-
-**Ollama no disponible**
-```bash
-# Verifica que Ollama esté corriendo
-ollama serve
-
-# En otra terminal
-python bobi.py
-```
-
-**Voz no funciona**
-- Windows: Requiere Python 3.11 o 3.12 para PyAudio
-- Linux: `sudo apt install portaudio19-dev && pip install pyaudio`
-
-**Respuestas lentas**
-- Usa un modelo más pequeño: `ollama pull phi3`
-- Edita `data/config.yaml` y cambia `model: "phi3"`
+| Python | 3.11+ | 3.12 |
 
 ---
 
@@ -204,15 +207,15 @@ python bobi.py
 
 1. Fork el proyecto
 2. Crea una rama (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit tus cambios (`git commit -am 'Agrega nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
+3. Commit (`git commit -am 'Agrega nueva funcionalidad'`)
+4. Push (`git push origin feature/nueva-funcionalidad`)
 5. Abre un Pull Request
 
 ---
 
 ## 📄 Licencia
 
-Este proyecto es de código abierto y está disponible bajo la licencia MIT.
+MIT License - Código abierto y gratuito
 
 ---
 
@@ -220,7 +223,7 @@ Este proyecto es de código abierto y está disponible bajo la licencia MIT.
 
 - [Ollama](https://ollama.ai/) - IA local
 - [Whisper](https://github.com/openai/whisper) - Reconocimiento de voz
-- [faster-whisper](https://github.com/guillaumekln/faster-whisper) - Implementación optimizada
+- [edge-tts](https://github.com/rany2/edge-tts) - Voz natural de Microsoft
 
 ---
 

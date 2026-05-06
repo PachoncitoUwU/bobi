@@ -14,13 +14,13 @@ ollama>=0.3.0                        # Ollama - Local (opcional)
 # ── VOZ ──
 faster-whisper>=1.0.0            # Speech-to-Text (Whisper optimizado)
 pyaudio>=0.2.14                  # Captura de audio del micrófono
+edge-tts>=6.1.0                  # Text-to-Speech natural (Microsoft) ⭐
+pygame>=2.5.0                    # Reproducción de audio inline ⭐
 pyttsx3>=2.90                    # Text-to-Speech básico (fallback)
 
-# ── WEB DASHBOARD ──
-flask>=3.0.0                     # Servidor web
-flask-cors>=4.0.0                # CORS para API
-flask-socketio>=5.3.0            # WebSockets para tiempo real
-python-socketio>=5.11.0          # Cliente WebSocket
+# ── WEB INTERFAZ ──
+flask>=3.0.0                     # Servidor web ⭐
+flask-cors>=4.0.0                # CORS para API ⭐
 
 # ── BASE DE DATOS ──
 sqlalchemy>=2.0.0                # ORM para recordatorios

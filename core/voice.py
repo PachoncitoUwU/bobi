@@ -1,6 +1,7 @@
 """
 Sistema de Voz - Speech-to-Text y Text-to-Speech
 Soporta múltiples engines con fallbacks automáticos
+Incluye edge-tts para voces naturales de Microsoft
 """
 
 import os
@@ -9,6 +10,7 @@ import wave
 import tempfile
 import subprocess
 import threading
+import asyncio
 from pathlib import Path
 from typing import Optional
 
@@ -34,6 +36,18 @@ try:
     PYTTSX3_OK = True
 except ImportError:
     PYTTSX3_OK = False
+
+try:
+    import edge_tts
+    EDGE_TTS_OK = True
+except ImportError:
+    EDGE_TTS_OK = False
+
+try:
+    import pygame
+    PYGAME_OK = True
+except ImportError:
+    PYGAME_OK = False
 
 
 class STT:
@@ -210,6 +224,10 @@ class TTS:
         """Detecta qué engines de TTS están disponibles"""
         engines = []
         
+        # edge-tts (Microsoft, muy natural) - MEJOR OPCIÓN
+        if EDGE_TTS_OK:
+            engines.append("edge-tts")
+        
         # Piper (mejor calidad)
         if self._check_command("piper"):
             engines.append("piper")
@@ -269,7 +287,10 @@ class TTS:
         # Intentar engines en orden de preferencia
         for engine in self.available_engines:
             try:
-                if engine == "piper":
+                if engine == "edge-tts":
+                    self._speak_edge_tts(text)
+                    return
+                elif engine == "piper":
                     self._speak_piper(text)
                     return
                 elif engine == "espeak-ng":
@@ -289,6 +310,73 @@ class TTS:
                 continue
         
         print(f"❌ No se pudo hablar: {text}")
+    
+    def _speak_edge_tts(self, text: str):
+        """TTS con edge-tts (Microsoft, muy natural)"""
+        # Voces en español disponibles:
+        # es-ES-AlvaroNeural (hombre, España)
+        # es-ES-ElviraNeural (mujer, España)
+        # es-MX-DaliaNeural (mujer, México)
+        # es-MX-JorgeNeural (hombre, México)
+        # es-AR-ElenaNeural (mujer, Argentina)
+        # es-AR-TomasNeural (hombre, Argentina)
+        
+        # 🎙️ VOZ MASCULINA NEUTRAL - opciones disponibles:
+        # "es-ES-AlvaroNeural"    → Hombre, España    (neutral, profesional) ← ACTUAL
+        # "es-MX-JorgeNeural"    → Hombre, México    (cálido, amigable)
+        # "es-AR-TomasNeural"    → Hombre, Argentina  (expresivo)
+        # "es-ES-AbrilNeural"    → Mujer, España     (si prefieres femenino)
+        voice = self.config.get("voice.tts_voice", "es-ES-AlvaroNeural")
+        rate  = self.config.get("voice.tts_rate",  "+0%")   # ej: "+10%" más rápido, "-10%" más lento
+        pitch = self.config.get("voice.tts_pitch", "+0Hz")  # ej: "-5Hz" más grave
+        
+        tmp = tempfile.NamedTemporaryFile(suffix=".mp3", delete=False)
+        
+        try:
+            # Generar audio con edge-tts
+            async def generate():
+                communicate = edge_tts.Communicate(text, voice, rate=rate, pitch=pitch)
+                await communicate.save(tmp.name)
+            
+            # Ejecutar async
+            asyncio.run(generate())
+            
+            # Reproducir con pygame (inline, sin abrir ventana externa)
+            if PYGAME_OK:
+                try:
+                    # Inicializar pygame mixer si no está inicializado
+                    if not pygame.mixer.get_init():
+                        pygame.mixer.init()
+                    
+                    # Cargar y reproducir
+                    pygame.mixer.music.load(tmp.name)
+                    pygame.mixer.music.play()
+                    
+                    # Esperar a que termine
+                    while pygame.mixer.music.get_busy():
+                        pygame.time.Clock().tick(10)
+                    
+                    return
+                except Exception as e:
+                    print(f"⚠️  Error con pygame: {e}")
+            
+            # Fallback: reproducir con comando del sistema
+            if os.name == 'nt':  # Windows
+                # Usar PowerShell para reproducir sin abrir ventana
+                subprocess.run(
+                    ['powershell', '-c', f'(New-Object Media.SoundPlayer "{tmp.name}").PlaySync()'],
+                    capture_output=True
+                )
+            else:  # Linux/Mac
+                subprocess.run(["mpg123", "-q", tmp.name], capture_output=True)
+        
+        finally:
+            try:
+                import time
+                time.sleep(0.5)  # Esperar un poco antes de borrar
+                os.unlink(tmp.name)
+            except:
+                pass
     
     def _speak_piper(self, text: str):
         """TTS con Piper (mejor calidad)"""
