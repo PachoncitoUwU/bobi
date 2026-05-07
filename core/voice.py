@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 """
 Sistema de Voz - Speech-to-Text y Text-to-Speech
-Soporta múltiples engines con fallbacks automáticos
+Soporta multiples engines con fallbacks automaticos
 Incluye edge-tts para voces naturales de Microsoft
 """
 
@@ -22,14 +23,14 @@ try:
     AUDIO_OK = True
 except ImportError:
     AUDIO_OK = False
-    print("⚠️  PyAudio no instalado. Voz no disponible.")
+    print("[!] PyAudio no instalado. Microfono no disponible.")
 
 try:
     from faster_whisper import WhisperModel
     WHISPER_OK = True
 except ImportError:
     WHISPER_OK = False
-    print("⚠️  faster-whisper no instalado. STT no disponible.")
+    print("[!] faster-whisper no instalado. STT no disponible.")
 
 try:
     import pyttsx3

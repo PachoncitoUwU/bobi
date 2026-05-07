@@ -1,99 +1,114 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bobi - Asistente Virtual</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bobi · Asistente de Casa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="header-content">
-                <h1 class="title">
-                    <span class="emoji">🤖</span>
-                    <span class="title-text">Bobi</span>
-                </h1>
-                <div class="status">
-                    <span class="status-dot" id="statusDot"></span>
-                    <span class="status-text" id="statusText">Listo</span>
-                </div>
-            </div>
-        </header>
 
-        <!-- Main Content -->
-        <main class="main">
-            <!-- Avatar -->
-            <div class="avatar-container">
-                <div class="avatar" id="avatar">
-                    <div class="avatar-glow"></div>
-                    <div class="avatar-face">
-                        <div class="eyes">
-                            <div class="eye left-eye" id="leftEye">
-                                <div class="pupil"></div>
-                            </div>
-                            <div class="eye right-eye" id="rightEye">
-                                <div class="pupil"></div>
-                            </div>
-                        </div>
-                        <div class="mouth" id="mouth"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Chat Area -->
-            <div class="chat-container">
-                <div class="chat-messages" id="chatMessages">
-                    <div class="message bobi-message">
-                        <div class="message-avatar">🤖</div>
-                        <div class="message-content">
-                            <div class="message-name">Bobi</div>
-                            <div class="message-text">¡Hola! Soy Bobi, tu asistente virtual. ¿En qué puedo ayudarte?</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Input Area -->
-            <div class="input-container">
-                <div class="input-wrapper">
-                    <input 
-                        type="text" 
-                        class="input-field" 
-                        id="inputField" 
-                        placeholder="Escribe tu mensaje..."
-                        autocomplete="off"
-                    >
-                    <button class="btn btn-send" id="sendBtn" title="Enviar mensaje">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <line x1="22" y1="2" x2="11" y2="13"></line>
-                            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
-                        </svg>
-                    </button>
-                </div>
-                <div class="button-group">
-                    <button class="btn btn-voice" id="voiceBtn" title="Hablar con micrófono">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
-                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                            <line x1="12" y1="19" x2="12" y2="23"></line>
-                            <line x1="8" y1="23" x2="16" y2="23"></line>
-                        </svg>
-                        <span>Hablar</span>
-                    </button>
-                    <button class="btn btn-clear" id="clearBtn" title="Limpiar chat">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <polyline points="3 6 5 6 21 6"></polyline>
-                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
-                        </svg>
-                        <span>Limpiar</span>
-                    </button>
-                </div>
-            </div>
-        </main>
+  <header id="header">
+    <div class="hdr-left">
+      <div class="logo-pulse"></div>
+      <span class="logo-name">Bobi</span>
     </div>
+    <div class="hdr-right">
+      <div class="pill">
+        <span class="s-dot" id="sDot"></span>
+        <span id="sText">Conectando...</span>
+      </div>
+      <div class="pill" id="provPill">IA: —</div>
+    </div>
+  </header>
 
-    <script src="app.js"></script>
+  <main id="main">
+
+    <!-- ── AVATAR ─────────────────────────────── -->
+    <section class="av-panel" id="avPanel">
+      <div class="av-blob av-blob-1"></div>
+      <div class="av-blob av-blob-2"></div>
+      <div class="av-ring"></div>
+
+      <div class="bobi-head" id="bobiHead">
+        <!-- Ojos LED -->
+        <div class="eyes-row">
+          <div class="eye-bar" id="eyeL"></div>
+          <div class="eye-bar" id="eyeR"></div>
+        </div>
+        <!-- Boca LED -->
+        <div class="mouth-bar" id="mouthBar"></div>
+      </div>
+
+      <div class="av-label" id="avLabel">Listo para ayudarte</div>
+      <!-- Indicador wake word -->
+      <div class="wake-indicator" id="wakeIndicator">
+        <span class="wake-dot"></span>
+        <span>Oye Bobi</span>
+      </div>
+    </section>
+
+    <!-- ── CHAT ──────────────────────────────── -->
+    <section class="chat-zone">
+      <div class="messages" id="messages"></div>
+
+      <div class="typing" id="typing" style="display:none">
+        <div class="t-dot"></div><div class="t-dot"></div><div class="t-dot"></div>
+      </div>
+
+      <div class="input-bar">
+        <input class="inp" id="inp" type="text"
+               placeholder="Escribe algo o usa el micrófono..."
+               autocomplete="off">
+        <button class="btn-send-ic" id="btnSend" title="Enviar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+            <line x1="22" y1="2" x2="11" y2="13"></line>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+          </svg>
+        </button>
+      </div>
+
+      <div class="controls">
+        <button class="btn-pill btn-mic" id="btnMic">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="23"></line>
+            <line x1="8" y1="23" x2="16" y2="23"></line>
+          </svg>
+          <span>Hablar</span>
+        </button>
+
+        <button class="btn-pill btn-clear" id="btnClear">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+          </svg>
+          <span>Limpiar</span>
+        </button>
+
+        <button class="btn-pill btn-mute" id="btnMute">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <span>Voz activada</span>
+        </button>
+
+        <button class="btn-pill btn-wake" id="btnWake">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="2"></circle>
+            <path d="M16.24 7.76a6 6 0 0 1 0 8.49M7.76 16.24a6 6 0 0 1 0-8.49"></path>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 19.07a10 10 0 0 1 0-14.14"></path>
+          </svg>
+          <span>Wake word OFF</span>
+        </button>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
 </body>
 </html>

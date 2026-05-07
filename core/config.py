@@ -39,7 +39,7 @@ class Config:
             },
             "ollama": {
                 "enabled": True,
-                "model": "llama3.2",
+                "model": "phi3:mini",
                 "url": "http://localhost:11434",
                 "priority": 3,  # Fallback local
             }
@@ -47,12 +47,14 @@ class Config:
         
         # Voz
         "voice": {
-            "stt_engine": "whisper",  # Speech-to-Text
-            "stt_model": "base",      # tiny, base, small, medium
-            "tts_engine": "piper",    # Text-to-Speech
-            "tts_voice": "es_ES-davefx-medium",
+            "stt_engine": "whisper",        # Speech-to-Text
+            "stt_model": "base",            # tiny, base, small, medium
+            "tts_engine": "edge-tts",       # Text-to-Speech (edge-tts = Microsoft, muy natural)
+            "tts_voice": "es-ES-AlvaroNeural",  # Voz masculina neutral (cambiar en config.yaml)
+            "tts_rate": "+0%",             # Velocidad: +10% más rápido, -10% más lento
+            "tts_pitch": "-2Hz",           # Tono: -2Hz ligeramente más grave/maduro
             "wake_word": "bobi",
-            "wake_word_enabled": False,  # Por ahora manual
+            "wake_word_enabled": False,     # Por ahora manual
         },
         
         # Memoria
